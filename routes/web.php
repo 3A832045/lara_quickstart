@@ -18,7 +18,15 @@ Route::get('/', function () {
     return view('tasks');
 });
 Route::post('/task',function (Request $request){
-   //
+   $validator=Validator::make($request->all(),[
+       'name'=>'request|max:255',
+   ]);
+
+   if($validator->fail()){
+     return redirect('/')
+         ->withInput()
+         ->withErrors($validator);
+   };
 });
 Route::delete('/task/{task}',function (Task $task){
     //
